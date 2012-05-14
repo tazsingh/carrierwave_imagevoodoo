@@ -6,6 +6,7 @@ CarrierWave support for ImageVoodoo
 
 Add this line to your application's Gemfile:
 
+    gem 'image_voodoo'
     gem 'carrierwave_imagevoodoo'
 
 And then execute:
@@ -14,7 +15,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install carrierwave_imagevoodoo
+    $ gem install image_voodoo carrierwave_imagevoodoo
 
 ## Usage
 
