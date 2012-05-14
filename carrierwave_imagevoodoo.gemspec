@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["taz@zenapsis.com"]
   gem.description   = "CarrierWave support for ImageVoodoo"
   gem.summary       = "A simple CarrierWave processor utilizing ImageVoodoo for processing"
-  gem.homepage      = ""
+  gem.homepage      = "https://github.com/zenapsis/carrierwave_imagevoodoo"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
@@ -14,4 +14,10 @@ Gem::Specification.new do |gem|
   gem.name          = "carrierwave_imagevoodoo"
   gem.require_paths = ["lib"]
   gem.version       = CarrierWave::ImageVoodoo::VERSION
+  gem.platform      = "java"
+
+  gem.add_dependency "carrierwave"
+  gem.add_dependency "image_voodoo"
+
+  gem.add_development_dependency "rake"
 end
