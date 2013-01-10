@@ -1,4 +1,6 @@
 require "carrierwave_imagevoodoo/version"
+require "active_support/concern"
+require "image_voodoo"
 
 module CarrierWave
   module ImageVoodoo
