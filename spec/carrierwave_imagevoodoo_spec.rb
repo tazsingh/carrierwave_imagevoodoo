@@ -28,10 +28,11 @@ describe CarrierWave::ImageVoodoo do
     @root_dir = begin
       dir = File.dirname(__FILE__)
       while !Dir.entries(dir).include?("Gemfile")
-        dir = File.expand_path("..", Dir.pwd)
+        dir = File.expand_path(dir + "/..", Dir.pwd)
       end
       dir
     end
+
     CarrierWave.configure do |config|
       config.storage = :file
       config.root = @root_dir
