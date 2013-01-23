@@ -45,8 +45,8 @@ module CarrierWave
 
         if width != cols or height != rows
           scale = [width/cols.to_f, height/rows.to_f].min
-          cols = (scale * (cols + 0.5)).round
-          rows = (scale * (rows + 0.5)).round
+          cols = (scale * cols).round
+          rows = (scale * rows).round
           image.resize cols, rows do |img|
             yield(img) if block_given?
             img.save current_path
