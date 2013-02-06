@@ -1,6 +1,4 @@
-require "carrierwave_imagevoodoo/version"
-require "active_support/concern"
-require "image_voodoo"
+Bundler.require
 
 module CarrierWave
   module ImageVoodoo
