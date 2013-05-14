@@ -11,9 +11,9 @@ module CarrierWave
         process :convert => format
       end
 
-      #def resize_to_limit width, height
-      #  process :resize_to_limit => [width, height]
-      #end
+      def resize_to_limit width, height
+        process :resize_to_limit => [width, height]
+      end
 
       def resize_to_fit width, height
         process :resize_to_fit => [width, height]
@@ -35,22 +35,18 @@ module CarrierWave
       end
     end
 
-    #def resize_to_limit width, height
-    #end
+    def resize_to_limit width, height
+      manipulate! do |image|
+        if (width < image.width) || (height < image.height)
+          resize_to_fit!(image, width, height)
+        end
+      end
+    end
 
     def resize_to_fit width, height
       manipulate! do |image|
-        cols = image.width
-        rows = image.height
-
-        if width != cols or height != rows
-          scale = [width/cols.to_f, height/rows.to_f].min
-          cols = (scale * cols).round
-          rows = (scale * rows).round
-          image.resize cols, rows do |img|
-            yield(img) if block_given?
-            img.save current_path
-          end
+        if (width != image.width) || (height != image.height)
+          resize_to_fit!(image, width, height)
         end
       end
     end
@@ -118,6 +114,16 @@ module CarrierWave
 
     def manipulate!
       yield ::ImageVoodoo.with_bytes file.read
+    end
+
+    def resize_to_fit! image, width, height
+      w_ratio = width / image.width.to_f
+      h_ratio = height / image.height.to_f
+      ratio = [w_ratio, h_ratio].min
+
+      image.scale(ratio) do |img|
+        img.save current_path
+      end
     end
   end
 end
