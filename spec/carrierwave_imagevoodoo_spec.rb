@@ -50,4 +50,21 @@ describe CarrierWave::ImageVoodoo do
       instance.should have_dimensions(1000, 1000)
     end
   end
+
+  describe '#resize_to_limit' do
+    it "resizes the image to fit when height is constraining dimension" do
+      instance.resize_to_limit(700, 200)
+      instance.should have_dimensions(127, 200)
+    end
+    
+    it "resizes image to fit when width is constraining dimension" do
+      instance.resize_to_limit(127, 2000)
+      instance.should have_dimensions(127, 200)
+    end
+
+    it "does not scale up the image if smaller than given dimensions" do
+      instance.resize_to_limit(2000, 2000)
+      instance.should have_dimensions(635, 1000)
+    end
+  end
 end
