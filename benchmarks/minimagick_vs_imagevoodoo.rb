@@ -4,10 +4,8 @@ require "carrierwave"
 class CatUploader < CarrierWave::Uploader::Base
   storage :file
 
-  100.times do |i|
-    version "size#{i}" do
-      process resize_to_fit: [200, 200]
-    end
+  version :thumbnail do
+    process resize_to_fit: [200, 200]
   end
 end
 
@@ -29,10 +27,12 @@ end
 
 puts "STARTED"
 3.times do
-  puts Benchmark.measure {
-    instance.store! cat_file
-  }
+  puts(Benchmark.measure do
+    10.times do
+      instance.store! cat_file
 
-  FileUtils.rm_r "uploads"
+      FileUtils.rm_r "uploads"
+    end
+  end)
 end
 puts "ENDED"

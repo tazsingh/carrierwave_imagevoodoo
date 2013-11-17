@@ -83,7 +83,7 @@ module CarrierWave
         end
       end
     end
-    
+
     private
 
     def extract_dimensions(width, height, new_width, new_height, type = :resize)
@@ -101,7 +101,7 @@ module CarrierWave
 
     def extract_dimensions_for_crop(width, height, new_width, new_height)
       extract_dimensions(width, height, new_width, new_height, :crop)
-    end 
+    end
 
     def extract_placement_for_crop(width, height, new_width, new_height)
       x_offset = (width / 2.0) - (new_width / 2.0)
@@ -112,8 +112,12 @@ module CarrierWave
     #def resize_and_pad width, height, background = :transparent
     #end
 
+    def image_voodoo_image
+      @image_voodoo_image ||= ::ImageVoodoo.with_bytes(file.read)
+    end
+
     def manipulate!
-      yield ::ImageVoodoo.with_bytes file.read
+      yield image_voodoo_image
     end
 
     def resize_to_fit! image, width, height
@@ -124,6 +128,14 @@ module CarrierWave
       image.scale(ratio) do |img|
         img.save current_path
       end
+    end
+
+    def width
+      image_voodoo_image.width
+    end
+
+    def height
+      image_voodoo_image.height
     end
   end
 end
