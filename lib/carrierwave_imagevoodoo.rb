@@ -32,9 +32,7 @@ module CarrierWave
       manipulate! do |image|
         yield(image) if block_given?
 
-        image.save_impl format, Java::JavaIo::File.new(
-          "#{current_path.chomp(File.extname(current_path))}.#{format}"
-        )
+        image.save "#{current_path.chomp(File.extname(current_path))}.#{format}"
       end
     end
 
@@ -81,7 +79,7 @@ module CarrierWave
           end
 
           i2.with_crop( x_offset, y_offset, new_width + x_offset, new_height + y_offset) do |file|
-            file.save_impl format, Java::JavaIo::File.new(current_path)
+            file.save current_path
           end
         end
       end
@@ -122,19 +120,11 @@ module CarrierWave
     #end
 
     def image_voodoo_image
-      ::ImageVoodoo.with_bytes File.read(current_path)
-    end
-
-    def format
-      format = if respond_to? :filename
-        File.extname filename
-      else
-        File.extname current_path
+      if file.respond_to? :rewind
+        file.rewind
       end
 
-      if format.size > 0
-        format[1..-1]
-      end
+      ::ImageVoodoo.with_bytes file.read
     end
 
     def manipulate!
@@ -147,7 +137,7 @@ module CarrierWave
       ratio = [w_ratio, h_ratio].min
 
       image.scale(ratio) do |img|
-        img.save_impl format, Java::JavaIo::File.new(current_path)
+        img.save current_path
       end
     end
   end

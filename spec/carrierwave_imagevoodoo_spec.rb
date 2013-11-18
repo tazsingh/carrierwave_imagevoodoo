@@ -2,7 +2,7 @@ require "spec_helper"
 
 describe CarrierWave::ImageVoodoo do
   let :klass do
-    Class.new do
+    Class.new(CarrierWave::Uploader::Base) do
       include CarrierWave::ImageVoodoo
     end
   end
@@ -13,7 +13,7 @@ describe CarrierWave::ImageVoodoo do
 
   before do
     FileUtils.cp(file_path("cat.jpg"), file_path("cat_copy.jpg"))
-    subject.stub(:file).and_return(File.new(file_path("cat_copy.jpg")))
+    subject.stub(:file).and_return(CarrierWave::SanitizedFile.new(file_path("cat_copy.jpg")))
     subject.stub(:current_path).and_return(file_path("cat_copy.jpg"))
     subject.stub(:cached?).and_return true
   end
