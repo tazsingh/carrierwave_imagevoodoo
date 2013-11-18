@@ -76,11 +76,13 @@ describe CarrierWave::ImageVoodoo do
     end
   end
 
-  describe "#width" do
-    its(:width) { should == 635 }
-  end
+  describe "#dimensions" do
+    its(:dimensions) { should == [635, 1000] }
 
-  describe "#height" do
-    its(:height) { should == 1000 }
+    context "after processing" do
+      before { subject.resize_to_limit(127, 2000) }
+
+      its(:dimensions) { should == [127, 200] }
+    end
   end
 end
