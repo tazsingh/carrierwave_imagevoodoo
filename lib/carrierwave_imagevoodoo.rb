@@ -1,4 +1,15 @@
 require "carrierwave"
+%w[
+  common-lang
+  common-io
+  common-image
+  imageio-core
+  imageio-metadata
+  imageio-jpeg
+  imageio-tiff
+].each do |dep|
+  require File.expand_path("../../jars/twelvemonkeys-#{dep}-3.0-SNAPSHOT.jar", __FILE__)
+end
 require "image_voodoo"
 require "active_support/concern"
 

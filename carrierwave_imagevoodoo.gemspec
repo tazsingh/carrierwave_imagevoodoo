@@ -6,7 +6,7 @@ Gem::Specification.new do |gem|
   gem.email         = ["taz@zenapsis.com"]
   gem.description   = "CarrierWave support for ImageVoodoo"
   gem.summary       = "A simple CarrierWave processor utilizing ImageVoodoo for processing"
-  gem.homepage      = "https://github.com/zenapsis/carrierwave_imagevoodoo"
+  gem.homepage      = "https://github.com/tazsingh/carrierwave_imagevoodoo"
 
   gem.files         = `git ls-files`.split($\)
   gem.executables   = gem.files.grep(%r{^bin/}).map{ |f| File.basename(f) }
